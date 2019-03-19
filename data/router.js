@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
     // Tried alternating between req.body and post inside of the try to no avail
     // Function kept defaulting to the catch when if inside of the try and I wasn't getting the correct error message
     if (!req.body.title || !req.body.contents) { 
-        res.status(400).json({ message:"Please provide title and contents for the post." });
+        res.status(400).json({ errorMessage:"Please provide title and contents for the post." });
         return;
     }
     try {
@@ -76,35 +76,27 @@ router.delete('/:id', async (req, res) => {
 
 
 router.put('/:id', async (req, res) => {
+    // First of all, is the request formatted correctly. If not, 400 and end.
+    if (!req.body.title || !req.body.contents) { 
+        res.status(400).json({ errorMessage:"Please provide title and contents for the post."})
+        return;
+    }
+    // So we have a good request. Now let's see if the item to be updated exists. If it does, we move forward.
     try {
-        const data = await Database.update(req.params.id, req.body);
-        if (data) {
-            res.status(200).json(data);
-        } else {
-            res.status(404).json({ message: 'The data could not be found' });
+        const postById = await Database.findById(req.params.id); // These two awaits are 'caught' by the catch below, according to hackernoon
+        const post = await Database.update(req.params.id, req.body);
+        if (postById.length === 0) {  // This is the same trick we used on getById. Hopefully not super resouce wasteful.
+            res.status(404).json({ message: "The post with the specified ID does not exist." });
         }
-    } catch (error) {
-        // log error to database
+        else {
+            res.status(200).json(post);
+        }
+    } 
+    catch (error) {
         console.log(error);
-        res.status(500).json({ error: 'Error updating the data' });
+        res.status(500).json({ error: "The post information could not be modified." });
     }
 });
 
-
-router.get('/:id/messages', async (req, res) => {
-  try {
-    const messages = await Database.findHubMessages(req.params.id);
-
-    if (messages && messages.length > 0) {
-      res.status(200).json(messages);
-    } else {
-      res.status(404).json({ message: 'No messages for this data' });
-    }
-  } catch (error) {
-    res
-      .status(500)
-      .json({ error: 'error getting the messages for this data' });
-  }
-});
 
 module.exports = router;
