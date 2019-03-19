@@ -4,25 +4,24 @@ const Database = require('./db.js');
 
 const router = express.Router();
 
-// handles urls beginning with /data. 
+// handles urls beginning with /posts. 
 // Might change this to something more semantic now that I know what this API does
+// UPDATE: Changed to posts
 
-// /data
+// /posts
 router.get('/', async (req, res) => {
-  try {
-    const data = await Database.find(req.query);
-    res.status(200).json(data);
-  } catch (error) {
-    // log error to database
-    console.log(error);
-    res.status(500).json({
-      errorMessage: 'Error retrieving the data',
-    });
-  }
+    try {
+        const posts = await Database.find(req.query);
+        res.status(200).json(posts);
+    } catch (error) {
+        // log error to database
+        console.log(error);
+        res.status(500).json({errorMessage:"The posts information could not be retrieved.",});
+    }
 });
 
 
-// /data/:id
+// /posts/:id
 router.get('/:id', async (req, res) => {
     try {
         const data = await Database.findById(req.params.id);
