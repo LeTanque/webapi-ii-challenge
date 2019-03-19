@@ -13,7 +13,7 @@ server.get('/', (req, res) => {
     `);
 });
 
-server.use('/posts', databaseRouter);
+server.use('/api/posts', databaseRouter);
 
 // add an endpoint that returns all the messages for a hub
 // add an endpoint for adding new message to a hub
