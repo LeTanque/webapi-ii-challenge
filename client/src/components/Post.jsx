@@ -13,14 +13,23 @@ const Post = props => {
             {props.posts.map(post => {
                 return (
                     <Fragment key={post.id}>
-                        <div>{post.contents}</div>
+                        
+                        <div>{post.title}</div>
+                        <small>
+                            {post.contents}
+                            <br />
+                            <i>
+                                ID: {post.id}
+                            </i>
+                        </small>
+                        <br />
+
                     </Fragment>
                 )
             })}
 
         </Fragment>
     );
-
 }
 
 export default Post;
