@@ -6,6 +6,7 @@ import Post from './Post.jsx';
 
 
 const Posts = () => {
+
     // const { state, dispatch } = useContext(PostsContext); // This is pulling state from context
     const { state } = useContext(PostsContext); // This is pulling state without the dispatch function to set new state
 
@@ -15,8 +16,9 @@ const Posts = () => {
         <Fragment>
 
             <h1>Posts</h1>
-
-            <Post posts={state.posts} />
+            <section className='posts'>
+                <Post posts={state.posts} />
+            </section>
 
         </Fragment>
     );

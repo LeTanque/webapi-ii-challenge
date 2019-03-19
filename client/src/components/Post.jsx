@@ -1,10 +1,28 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
+import axios from 'axios';
+import { MdRemoveCircleOutline } from 'react-icons/md';
+
+import PostsContext from "../state/context";
 
 
 
 
 const Post = props => {
+    const { state, dispatch } = useContext(PostsContext); // This is pulling state from context
 
+    const deletePost = (id, postObject) => {
+        return (
+            async () => {
+                await axios.delete(`http://localhost:4000/api/posts/${id}`);
+                dispatch({ 
+                    type: "REMOVE_TODO", 
+                    payload: postObject 
+                });
+            }
+        ) 
+    }
+
+    console.log(state)
 
     return (
         <Fragment>
@@ -12,14 +30,20 @@ const Post = props => {
                 return (
                     <Fragment key={post.id}>
                         
-                        <div>{post.title}</div>
-                        <small>
+                        <div className='post-title'>
+                            {post.title}
+                        </div>
+                        <div className='post-contents'>
                             {post.contents}
-                            <br />
-                            <i>
-                                ID: {post.id}
-                            </i>
-                        </small>
+                        </div>
+                        <div className='post-id'>
+                            ID: {post.id}
+                        </div>
+                        <div className='post-actions'>
+                            <MdRemoveCircleOutline 
+                                onClick={deletePost(post.id, post)}
+                            />
+                        </div>
                         <br />
 
                     </Fragment>
