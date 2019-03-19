@@ -1,10 +1,13 @@
 const express = require('express');
+const cors = require('cors');
 
 const databaseRouter = require('./data/router.js');
 
 const server = express();
 
 server.use(express.json());
+server.use(cors());
+
 
 server.get('/', (req, res) => {
     res.send(`
@@ -15,8 +18,4 @@ server.get('/', (req, res) => {
 
 server.use('/api/posts', databaseRouter);
 
-// add an endpoint that returns all the messages for a hub
-// add an endpoint for adding new message to a hub
-
-//export default server; // ES2015
 module.exports = server; // CommonJS module syntax
