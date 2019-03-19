@@ -5,7 +5,8 @@ import React, { Fragment } from 'react';
 
 const Post = props => {
 
-    console.log(props.posts)
+    
+    // console.log(props.posts)
 
     return (
         <Fragment>

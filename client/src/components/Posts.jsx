@@ -7,7 +7,6 @@ import Post from './Post.jsx';
 const Posts = () => {
     const [ posts, setGetPosts ] = useState([]);
 
-
     useEffect(() => {
         (() => {
             axios
@@ -19,7 +18,7 @@ const Posts = () => {
         })()
     }, [])
 
-
+    
     return (
         <Fragment>
 
