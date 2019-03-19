@@ -1,30 +1,22 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { Fragment, useContext } from 'react';
+
+import PostsContext from "../state/context";
 
 import Post from './Post.jsx';
 
 
 const Posts = () => {
-    const [ posts, setGetPosts ] = useState([]);
+    // const { state, dispatch } = useContext(PostsContext); // This is pulling state from context
+    const { state } = useContext(PostsContext); // This is pulling state without the dispatch function to set new state
 
-    useEffect(() => {
-        (() => {
-            axios
-                .get('http://localhost:4000/api/posts')
-                .then(res => {
-                    setGetPosts(res.data)
-                })
-                .catch(err => console.log(err))
-        })()
-    }, [])
+    // console.log('This is the dispatch function: ', dispatch)
 
-    
     return (
         <Fragment>
 
             <h1>Posts</h1>
 
-            <Post posts={posts} />
+            <Post posts={state.posts} />
 
         </Fragment>
     );

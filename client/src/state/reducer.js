@@ -3,7 +3,7 @@ export default function reducer(state, action) {
         case "GET_POSTS":
             return {
                 ...state, 
-                todos: action.payload
+                posts: action.payload
             }
         default:
             return state

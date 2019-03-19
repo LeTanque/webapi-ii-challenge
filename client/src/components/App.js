@@ -8,7 +8,7 @@ import logo from '../assets/logo.svg';
 import Posts from './Posts.jsx';
 
 
-
+// This is a function that doesn't export from component but is used within it.
 const useAPI = endpoint => {
   const [data, setData] = useState([]);
 
@@ -22,6 +22,7 @@ const useAPI = endpoint => {
   };
   return data;
 };
+
 
 const App = () => {
   const initialState = useContext(PostContext);
